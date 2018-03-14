@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+div.post {
+    background: rgb(85, 110, 121);
+    color: white;
+    padding: 10px;
+    display: block;
+    margin: 10px auto;
+}
