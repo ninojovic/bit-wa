@@ -6,58 +6,51 @@ import UsersList from './users/UsersList'
 import UserService from './../services/UserService'
 
 class App extends React.Component {
-  state = {
-    users: [],
-    card: false,
-    value: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      filteredUsers: [],  //INSTEAD OF LINE 28 NEEDS TO BE SOMETHING LIKE FILTEREDUSERS = USERS;
+      card: false,
+    }
   }
 
   changeViewType = () => {
-    this.setState({ 
-      card: !this.state.card,
-    });
-    localStorage.setItem("card", !this.state.card);
-  }
+    this.setState({ card: !this.state.card });
 
-  updateValue = (event) => {
-    this.setState({value: event.target.value});
+    UserService.setCardView(!this.state.card);
   }
 
   fetchData = () => {
     UserService.fetchData()
       .then(usersData => usersData.map(user => new User(user)))
       .then(usersInstances => {
-        this.setState({ 
-          users: usersInstances,
-          filterUsers: usersInstances
-        })
-      })
-      .catch((error) => {
-        console.log(error);
+        this.setState({ users: usersInstances, filteredUsers: usersInstances })
       })
   }
 
-  filterUsers = () => {
-    const matchedUsers = this.state.users.filter(user => (user.name.first.indexOf(this.state.value) !== -1))
-    this.setState({users: matchedUsers});
+  filterUsers = (valueToSearch) => {
+    const allUsers = this.state.users;
+    const matchedUsers = allUsers.filter(user => (user.name.first.indexOf(valueToSearch) !== -1));
+    
+    this.setState({ filteredUsers: matchedUsers });
   }
 
   componentDidMount = () => {
     this.fetchData();
-    this.setState({card: JSON.parse(localStorage.getItem("card"))})
+    this.setState({ card: UserService.isCardView() })
   }
 
   render() {
     return ([
-      <Header 
-        changeView={this.changeViewType} 
-        fetch={this.fetchData} 
-        value = {this.state.value} 
-        card = {this.state.card} 
-        filterUsers={this.filterUsers} 
-        updateValue={this.updateValue}
+      <Header
+        changeView={this.changeViewType}
+        fetch={this.fetchData}
+        card={this.state.card}
+        users={this.state.users}
+        filterUsers={this.filterUsers}
       />,
-      <UsersList users={this.state} card={this.state.card} />,
+      <UsersList users={this.state.filteredUsers} card={this.state.card} />,
       <Footer />,
     ])
   }

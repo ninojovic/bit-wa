@@ -1,23 +1,37 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 class Search extends React.Component {
-    state = {
-        
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: "",
+        }
     }
 
-    onChangeValue = (params) => {
-        const textInput = params.target.value
-        this.setState
+    updateValue = (event) => {
+        this.setState({ value: event.target.value });
     }
 
+    searchUser = () => {
+        this.props.filterUsers(this.state.value);
+    }
+    
     render() {
         return (
-            <div className="input-field inline col s6 offset-s3">
-                <input id="search" onChange={updateValue} onKeyUp={filterUsers} type="text" value={value} className="validate center-align" />
-                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
+            <div className="input-field inline col s6">
+                <input type="text" className="validate center-align" placeholder="search for users"
+                    onChange={this.updateValue}
+                    onKeyUp={this.searchUser}
+                    value={this.value}
+                />
             </div>
         )
     }
+}
+
+Search.propTypes = {
+    filterUsers: PropTypes.func
 }
 
 export default Search

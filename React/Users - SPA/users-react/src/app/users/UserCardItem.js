@@ -4,11 +4,11 @@ import PropTypes from "prop-types"
 
 const UserCard = ({ user }) => {
 
-    const genderClass = (user.gender !== "male") ? "card red lighten-5" : "card";
+    const genderClass = (user.gender !== "male") ? "red lighten-5" : "";
 
     return (
         <div className="col m4">
-            <div className= {genderClass}>
+            <div className= {`card ${genderClass}`}>
                 <div className="card-image">
                     <img alt='' src={user.picture.large} />
                 </div>
