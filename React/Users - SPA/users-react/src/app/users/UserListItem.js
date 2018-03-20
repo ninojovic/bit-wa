@@ -3,12 +3,15 @@ import { hideEmail, formatDate } from './../../shared/utils'
 import PropTypes from "prop-types"
 
 const UserItem = ({ user }) => {
+
+    const genderClass = (user.gender !== "male") ? "collection-item avatar red lighten-5" : "collection-item avatar";
+
     return (
-        <li className="collection-item avatar">
+        <li className={genderClass}>
             <img alt='' src={user.picture.medium} className="circle" />
             <span className="title">name: {user.name.first}</span>
-            <p>email: {hideEmail(user.email)} <br />
-                birthday: {formatDate(user.dob)}
+            <p><i className="material-icons">email</i>email: {hideEmail(user.email)} <br />
+            <i className="material-icons">cake</i>birthday: {formatDate(user.dob)}
             </p>
         </li>
     )
