@@ -2,9 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import Search from "./Search"
 
-const Header = ({ changeView, fetch, card, filterUsers }) => {
+const Header = ({ changeView, fetch, card, filterUsers, loaded }) => {
 
     const icon = (card) ? "view_module" : "view_list"
+
+    let showSearch = (loaded) ? <Search filterUsers = {filterUsers}/> : <div className="col s6"></div>
     
     return (
         <nav>
@@ -14,7 +16,7 @@ const Header = ({ changeView, fetch, card, filterUsers }) => {
                         <div className="col s3">
                             <a href="#" className="brand-logo">Bit Users</a>
                         </div>
-                            <Search filterUsers = {filterUsers}/>
+                            {showSearch}
                         <div className="col s3">
                             <ul className="right hide-on-med-and-down">
                                 <li onClick={fetch}><a href="#"><i className="material-icons">refresh</i></a></li>

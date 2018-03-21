@@ -6,6 +6,10 @@ class User {
         this.dob = dob;
         this.picture = picture;
     }
+
+    getFullName = () => {
+        return `${this.name.first} ${this.name.last}`
+    }
 }
 
 export default User

@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import "./Search.css"
 
 class Search extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class Search extends React.Component {
         this.setState({ value: event.target.value });
     }
 
-    searchUser = () => {
+    triggerFilterUsers = () => {
         this.props.filterUsers(this.state.value);
     }
     
@@ -22,7 +23,7 @@ class Search extends React.Component {
             <div className="input-field inline col s6">
                 <input type="text" className="validate center-align" placeholder="search for users"
                     onChange={this.updateValue}
-                    onKeyUp={this.searchUser}
+                    onKeyUp={this.triggerFilterUsers}
                     value={this.value}
                 />
             </div>

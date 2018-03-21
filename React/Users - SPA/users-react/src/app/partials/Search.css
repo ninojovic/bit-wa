@@ -1,0 +1,9 @@
+input[type=text]:not(.browser-default) {
+    margin: 0;
+    background: white;
+    color: black;
+    border-radius: 15px;
+    background-image: url("http://www.clker.com/cliparts/w/r/Q/0/x/D/search-icon-light-grey.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
