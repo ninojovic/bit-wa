@@ -11,7 +11,13 @@ class Search extends React.Component {
     }
 
     updateValue = (event) => {
-        this.setState({ value: event.target.value });
+        this.setState({ value: event.target.value.toLowerCase() });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState !== this.state) {
+            this.triggerFilterUsers();
+        }
     }
 
     triggerFilterUsers = () => {
@@ -23,7 +29,6 @@ class Search extends React.Component {
             <div className="input-field inline col s6">
                 <input type="text" className="validate center-align" placeholder="search for users"
                     onChange={this.updateValue}
-                    onKeyUp={this.triggerFilterUsers}
                     value={this.value}
                 />
             </div>

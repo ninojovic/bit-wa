@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 const UserCard = ({ user }) => {
 
-    const genderClass = (user.gender !== "male") ? "red lighten-5" : "";
+    const genderClass = (user.isFemale()) ? "red lighten-5" : "";
 
     return (
         <div className="col m4">
@@ -13,7 +13,7 @@ const UserCard = ({ user }) => {
                     <img alt='' src={user.picture.large} />
                 </div>
                 <div className="card-content">
-                    <span className="title">name: {user.name.first}</span>
+                    <span className="title">name: {user.getFullName()}</span>
                     <p><i className="material-icons">email</i>email: {hideEmail(user.email)} <br />
                     <i className="material-icons">cake</i>birthday: {formatDate(user.dob)}
                     </p>

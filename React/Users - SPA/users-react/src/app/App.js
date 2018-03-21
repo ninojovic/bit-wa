@@ -17,20 +17,26 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    this.fetchUsersData();
+    this.setState({ cardView: StorageService.isCardView() })
+
+  }
+
   changeViewType = () => {
-    this.setState({ cardView: !this.state.cardView });
-    StorageService.setCardView(!this.state.cardView);
+    const { cardView } = this.state;
+    this.setState({ cardView: !cardView });
+    StorageService.setCardView(!cardView);
   }
 
   fetchUsersData = () => {
-    this.setState({loaded:false})
-    
-    UserService.fetchWithDelay()
-    //UserService.fetchAndCreateUsers()
+    this.setState({ loaded: false })
+
+    UserService.fetchAndCreateUsers()
       .then(usersInstances => {
-        this.setState({ 
-          users: usersInstances, 
-          filteredUsers: usersInstances, 
+        this.setState({
+          users: usersInstances,
+          filteredUsers: usersInstances,
           loaded: true,
         })
       })
@@ -39,16 +45,15 @@ class App extends React.Component {
   filterUsers = (valueToSearch) => {
     const allUsers = this.state.users;
     const matchedUsers = allUsers.filter(user => (user.getFullName().indexOf(valueToSearch) !== -1));
-    
+
     this.setState({ filteredUsers: matchedUsers });
   }
 
-  componentDidMount = () => {
-    this.fetchUsersData();
-    this.setState({ cardView: StorageService.isCardView() })
-  }
-
   render() {
+    const contentToRender = (this.state.loaded) ? 
+      <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> 
+      : 
+      <Loading />
 
     return (
       <React.Fragment>
@@ -56,16 +61,11 @@ class App extends React.Component {
           changeView={this.changeViewType}
           fetch={this.fetchUsersData}
           card={this.state.cardView}
-          users={this.state.users}
           filterUsers={this.filterUsers}
           loaded={this.state.loaded}
+          showIcons={true}
         />
-        {
-          (this.state.loaded) ? 
-          <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> 
-          : 
-          <Loading />
-        }
+        {contentToRender}
         <Footer />
       </React.Fragment>
     )

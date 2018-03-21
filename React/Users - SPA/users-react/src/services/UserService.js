@@ -2,25 +2,18 @@ import { URL } from "./../shared/constants"
 import User from './../entities/User'
 import axios from 'axios'
 
-class UserServices {
+class UserService {
+    constructor(url) {
+        this.url = url
+    }
+
     fetchAndCreateUsers() {
         return axios.get(URL)
             .then(response => response.data.results)
             .then(usersData => usersData.map(user => new User(user)))
     }
-
-    fetchWithDelay() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                axios.get(URL)
-                .then(response => response.data.results)
-                .then(usersData => usersData.map(user => new User(user)))
-                .then(users => resolve(users))
-            }, 5000)
-        })
-    }
 }
 
-const UserService = new UserServices();
+const userService = new UserService(URL);
 
-export default UserService;
+export default userService;
