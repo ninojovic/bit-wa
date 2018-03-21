@@ -25,8 +25,7 @@ class App extends React.Component {
   fetchUsersData = () => {
     this.setState({loaded:false})
     
-    UserService.fetchWithDelay()
-    //UserService.fetchAndCreateUsers()
+    UserService.fetchAndCreateUsers()
       .then(usersInstances => {
         this.setState({ 
           users: usersInstances, 
@@ -50,6 +49,8 @@ class App extends React.Component {
 
   render() {
 
+    const comp = (this.state.loaded) ? 
+    <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> : <Loading />
     return (
       <React.Fragment>
         <Header
@@ -60,12 +61,7 @@ class App extends React.Component {
           filterUsers={this.filterUsers}
           loaded={this.state.loaded}
         />
-        {
-          (this.state.loaded) ? 
-          <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> 
-          : 
-          <Loading />
-        }
+        {comp}
         <Footer />
       </React.Fragment>
     )
