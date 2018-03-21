@@ -7,7 +7,7 @@ const UserCard = ({ user }) => {
     const genderClass = (user.isFemale()) ? "red lighten-5" : "";
 
     return (
-        <div className="col m4">
+        <div className="col s4">
             <div className= {`card ${genderClass}`}>
                 <div className="card-image">
                     <img alt='' src={user.picture.large} />

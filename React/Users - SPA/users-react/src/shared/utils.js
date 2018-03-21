@@ -15,3 +15,18 @@ export const firstLetterToUpper = (string) => {
 
     return stringArr.join("");
 }
+
+const normalizeUser = (user) => {
+    return user.getFullName().toLowerCase()
+}
+
+const userNameContains = (user, valueToFind) => {
+    const userFullName = normalizeUser(user);
+    const value = valueToFind.toLowerCase();
+    
+    return userFullName.includes(value);
+}
+
+export const searchUsersByName = (users, valueToSearch) => {
+    return users.filter(user => userNameContains(user, valueToSearch))
+}

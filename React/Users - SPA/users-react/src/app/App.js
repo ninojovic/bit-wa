@@ -1,69 +1,64 @@
 import React from 'react';
+
+import userService from './../services/UserService'
+import storageService from './../services/StorageService'
+
+import { searchUsersByName } from './../shared/utils'
+
 import Header from './partials/Header'
 import Footer from './partials/Footer'
 import UsersList from './users/UsersList'
-import UserService from './../services/UserService'
-import StorageService from './../services/StorageService'
 import Loading from './partials/Loading'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: [],
-      filteredUsers: [],
-      cardView: false,
-      loaded: false,
-    }
+  state = {
+    users: [],
+    filteredUsers: [],
+    cardView: false,
+    loaded: false,
   }
 
   componentDidMount = () => {
     this.fetchUsersData();
-    this.setState({ cardView: StorageService.isCardView() })
-
+    this.setState({ cardView: storageService.isCardView() })
   }
 
   changeViewType = () => {
     const { cardView } = this.state;
+
     this.setState({ cardView: !cardView });
-    StorageService.setCardView(!cardView);
+    storageService.setCardView(!cardView);
   }
 
-  fetchUsersData = () => {
+  fetchUsersData = async () => {
     this.setState({ loaded: false })
 
-    UserService.fetchAndCreateUsers()
-      .then(usersInstances => {
-        this.setState({
-          users: usersInstances,
-          filteredUsers: usersInstances,
-          loaded: true,
-        })
-      })
+    const userInstances = await userService.fetchAndCreateUsers()
+    this.setState({ users: userInstances, filteredUsers: userInstances, loaded: true })
   }
 
   filterUsers = (valueToSearch) => {
-    const allUsers = this.state.users;
-    const matchedUsers = allUsers.filter(user => (user.getFullName().indexOf(valueToSearch) !== -1));
+    const { users } = this.state
+    const matchedUsers = searchUsersByName(users, valueToSearch);
 
     this.setState({ filteredUsers: matchedUsers });
   }
 
   render() {
-    const contentToRender = (this.state.loaded) ? 
-      <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> 
-      : 
+    const contentToRender = (this.state.loaded) ?
+      <UsersList users={this.state.filteredUsers} cardView={this.state.cardView} />
+      :
       <Loading />
 
     return (
       <React.Fragment>
         <Header
           changeView={this.changeViewType}
-          fetch={this.fetchUsersData}
-          card={this.state.cardView}
+          reload={this.fetchUsersData}
+          cardView={this.state.cardView}
           filterUsers={this.filterUsers}
           loaded={this.state.loaded}
-          showIcons={true}
+          showNav={true}
         />
         {contentToRender}
         <Footer />

@@ -1,5 +1,6 @@
-import { URL } from "./../shared/constants"
 import User from './../entities/User'
+import { URL } from "./../shared/constants"
+
 import axios from 'axios'
 
 class UserService {
@@ -7,10 +8,12 @@ class UserService {
         this.url = url
     }
 
-    fetchAndCreateUsers() {
-        return axios.get(URL)
-            .then(response => response.data.results)
-            .then(usersData => usersData.map(user => new User(user)))
+    fetchAndCreateUsers = async () => {
+        const response = await axios.get(URL)
+        const rawUsersData = response.data.results;
+        const usersInstances = rawUsersData.map(user => new User(user));
+
+        return usersInstances;
     }
 }
 
