@@ -3,7 +3,7 @@ import React from 'react';
 import userService from './../services/UserService'
 import storageService from './../services/StorageService'
 
-import { searchUsersByName } from './../shared/utils'
+import { searchUsersByName, minsFromLastVisit } from './../shared/utils'
 
 import Header from './partials/Header'
 import Footer from './partials/Footer'
@@ -16,10 +16,18 @@ class App extends React.Component {
     filteredUsers: [],
     cardView: false,
     loaded: false,
+    lastVisit: minsFromLastVisit(),
   }
 
   componentDidMount = () => {
-    this.fetchUsersData();
+    console.log(this.state.lastVisit)
+    const cachedUsers = storageService.getUsers();
+    if(cachedUsers !== null) {
+      const usersInstances = userService.createUsers(cachedUsers);
+      this.setState({ users: usersInstances, filteredUsers: usersInstances, loaded: true })
+    } else {
+      this.fetchUsersData();
+    }
     this.setState({ cardView: storageService.isCardView() })
   }
 
@@ -35,6 +43,9 @@ class App extends React.Component {
 
     const userInstances = await userService.fetchAndCreateUsers()
     this.setState({ users: userInstances, filteredUsers: userInstances, loaded: true })
+
+    storageService.setLastVisit();
+    storageService.setUsers(userInstances);
   }
 
   filterUsers = (valueToSearch) => {
@@ -63,7 +74,7 @@ class App extends React.Component {
           showNav={true}
         />
         {contentToRender}
-        <Footer />
+        <Footer lastVisit={this.state.lastVisit}/>
       </React.Fragment>
     )
   }

@@ -7,3 +7,7 @@ i.material-icons {
 .col.s8 {
     padding: 0 !important;
 }
+
+#userNotFound {
+    width: 100%;
+}

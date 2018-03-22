@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import UserItem from "./UserListItem"
 import UserCard from "./UserCardItem"
 
+import { NOTFOUND } from './../../shared/constants'
 import './UserList.css'
 
 const UsersList = ({ users, cardView }) => {
@@ -15,10 +16,16 @@ const UsersList = ({ users, cardView }) => {
         users.map((singleUser, i) => <UserItem key={i} user={singleUser} />)
     }
 
+    const renderContent = () => {
+        return (users.length !== 0) ? getViewType() 
+        : 
+        <img id="userNotFound" src={NOTFOUND} />
+    }
+
     return (
         <div className="row">
             <ul className="collection col s8 offset-s2">
-                { getViewType() }
+                { renderContent() }
             </ul>
         </div>
     )

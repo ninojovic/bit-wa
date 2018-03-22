@@ -8,10 +8,14 @@ class UserService {
         this.url = url
     }
 
+    createUsers = (usersData) => {
+        return usersData.map(user => new User(user));
+    }
+
     fetchAndCreateUsers = async () => {
         const response = await axios.get(URL)
         const rawUsersData = response.data.results;
-        const usersInstances = rawUsersData.map(user => new User(user));
+        const usersInstances = this.createUsers(rawUsersData);
 
         return usersInstances;
     }
