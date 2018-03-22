@@ -1,15 +1,22 @@
-class StorageServices {
+import { KEY } from "constants"
+
+
+class StorageService {
+    constructor(key) {
+        this.key = key
+    }
+
     setCardView(bool) {
-        localStorage.setItem("card", bool);
+        localStorage.setItem(this.key, bool);
     }
 
     isCardView() {
-        const cardViewString = localStorage.getItem("card");
+        const cardViewString = localStorage.getItem(this.key);
         const cardView = JSON.parse(cardViewString);
         return cardView;
     }
 }
 
-const StorageService = new StorageServices();
+const storageService = new StorageService(KEY);
 
-export default StorageService;
+export default storageService;

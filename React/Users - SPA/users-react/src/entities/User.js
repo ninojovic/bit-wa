@@ -1,3 +1,5 @@
+import { firstLetterToUpper } from './../shared/utils'
+
 class User {
     constructor({name, email, dob, picture, gender}) {
         this.gender = gender;
@@ -8,7 +10,14 @@ class User {
     }
 
     getFullName = () => {
-        return `${this.name.first} ${this.name.last}`
+        const firstName = firstLetterToUpper(this.name.first)
+        const lastName = firstLetterToUpper(this.name.last)
+
+        return `${firstName} ${lastName}`
+    }
+
+    isFemale = () => {
+        return (this.gender === "female") ? true : false;
     }
 }
 
