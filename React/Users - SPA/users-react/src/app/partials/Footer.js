@@ -1,16 +1,17 @@
 import React from "react"
 
-import { timeFromLastVisit } from './../../shared/utils'
+import { getLastUpdateString, minsFromLastVisit } from './../../shared/utils'
 
-const Footer = ({ lastVisit }) => {
+const Footer = () => {
 
-  const lastUpdate = timeFromLastVisit(lastVisit)
+  const minsFromUpdate = minsFromLastVisit();
+  const lastUpdate = getLastUpdateString(minsFromUpdate)
 
     return (
         <footer className="page-footer">
           <div className="footer-copyright">
             <div className="container">
-            © 2014 Copyright Text <span className="right">Last update: {lastUpdate}</span>
+            © 2018 Ninoslav Jovic <span className="right">Last update: {lastUpdate}</span>
             </div>
           </div>
         </footer>

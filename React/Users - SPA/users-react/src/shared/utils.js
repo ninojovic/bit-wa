@@ -41,11 +41,12 @@ export const minsFromLastVisit = () => {
     return timeFromLastVisit
 }
 
-export const timeFromLastVisit = (lastVisit) => {
+export const getLastUpdateString = (lastVisit) => {
     const time = lastVisit;
+    console.log(time)
 
     switch(true) {
-      case ((time > 1) && (time < 20)):
+      case ((time > 0) && (time < 20)):
           return "1 minute ago"
           break;
       case ((time > 20) && (time < 60)):

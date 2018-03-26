@@ -3,9 +3,9 @@ import { CARDKEY, USERSKEY, LASTVISIT } from "./../shared/constants"
 
 class StorageService {
     constructor(cardKey, usersKey, lastVisit) {
-        this.cardKey = cardKey,
-        this.usersKey = usersKey,
-        this.lastVisit = lastVisit
+        this.cardKey = cardKey;
+        this.usersKey = usersKey;
+        this.lastVisit = lastVisit;
     }
 
     setCardView(bool) {

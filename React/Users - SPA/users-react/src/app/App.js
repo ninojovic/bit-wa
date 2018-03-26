@@ -3,7 +3,7 @@ import React from 'react';
 import userService from './../services/UserService'
 import storageService from './../services/StorageService'
 
-import { searchUsersByName, minsFromLastVisit } from './../shared/utils'
+import { searchUsersByName } from './../shared/utils'
 
 import Header from './partials/Header'
 import Footer from './partials/Footer'
@@ -15,12 +15,10 @@ class App extends React.Component {
     users: [],
     filteredUsers: [],
     cardView: false,
-    loaded: false,
-    lastVisit: minsFromLastVisit(),
+    loaded: false
   }
 
   componentDidMount = () => {
-    console.log(this.state.lastVisit)
     const cachedUsers = storageService.getUsers();
     if(cachedUsers !== null) {
       const usersInstances = userService.createUsers(cachedUsers);
@@ -61,8 +59,6 @@ class App extends React.Component {
       :
       <Loading />
 
-    const comp = (this.state.loaded) ? 
-    <UsersList users={this.state.filteredUsers} card={this.state.cardView} /> : <Loading />
     return (
       <React.Fragment>
         <Header
@@ -74,7 +70,7 @@ class App extends React.Component {
           showNav={true}
         />
         {contentToRender}
-        <Footer lastVisit={this.state.lastVisit}/>
+        <Footer />
       </React.Fragment>
     )
   }

@@ -19,7 +19,7 @@ const UsersList = ({ users, cardView }) => {
     const renderContent = () => {
         return (users.length !== 0) ? getViewType() 
         : 
-        <img id="userNotFound" src={NOTFOUND} />
+        <img id="userNotFound" alt="notFound" src={NOTFOUND} />
     }
 
     return (

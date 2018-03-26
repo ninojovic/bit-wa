@@ -9,8 +9,8 @@ const HeaderNav = ({ reload, changeView, cardView }) => {
         <div className="col s3">
             <ul className="right hide-on-med-and-down">
                 <li><Link to="/about">About</Link></li>
-                <li onClick={ reload }><a href="#"><i className="material-icons">refresh</i></a></li>
-                <li onClick={ changeView }><a href="#"><i className="material-icons">{ icon }</i></a></li>
+                <li onClick={ reload }><a><i className="material-icons">refresh</i></a></li>
+                <li onClick={ changeView }><a><i className="material-icons">{ icon }</i></a></li>
             </ul>
         </div>
     )
